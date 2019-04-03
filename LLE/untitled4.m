@@ -1,0 +1,38 @@
+tt=-100:1:100;
+
+FIa = @(t,x) (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - 0.3e1 .* x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) + 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) - x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (0.2e1 .* real(uS) .^ 2 .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .^ 2 .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2));
+Ia = integral(@(t)FIa(t,x),-inf,inf,'AbsTol',1e-15,'RelTol',1e-13);
+
+FIb = @(t,x) (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (0.2e1 .* imag(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* real(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2));
+Ib = integral(@(t)FIb(t,x),-inf,inf,'AbsTol',1e-15,'RelTol',1e-13);
+
+FIc = @(t,x) (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (t - x(6)) .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (t - x(6)) .* (0.2e1 .* imag(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* real(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2));
+Ic = integral(@(t)FIc(t,x),-inf,inf,'AbsTol',1e-15,'RelTol',1e-13);
+
+FId = @(t,x) (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (t - x(6)) .^ 2 .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (t - x(6)) .^ 2 .* (0.2e1 .* imag(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* real(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2));
+Id = integral(@(t)FId(t,x),-inf,inf,'AbsTol',1e-15,'RelTol',1e-13);
+
+FIs = @(t,x) (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - 0.3e1 .* x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (t - x(6)) .^ 2 ./ x(5) .^ 3 .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) + 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (t - x(6)) .^ 2 ./ x(5) .^ 3 .* (0.2e1 .* real(uS) .^ 2 .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .^ 2 .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2));
+Is = integral(@(t)FIs(t,x),-inf,inf,'AbsTol',1e-15,'RelTol',1e-13);
+
+FIxi = @(t,x) (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (-x(3) - 0.2e1 .* x(4) .* (t - x(6))) .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (-x(3) - 0.2e1 .* x(4) .* (t - x(6))) .* (0.2e1 .* imag(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* real(uS) .^ 2 .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2)) + (h .^ 2 .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) .^ 2 + h ./ sigma_X .^ 2 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - h .* (t - tau0) .^ 2 ./ sigma_X .^ 4 .* exp(-(t - tau0) .^ 2 ./ sigma_X .^ 2 ./ 0.2e1) - 0.3e1 .* x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2) .* x(1) .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .* (t - x(6)) .* (0.2e1 .* real(uS) .* cos(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2) + 0.2e1 .* imag(uS) .* sin(x(2) + x(3) .* (t - x(6)) + x(4) .* (t - x(6)) .^ 2)) ./ x(5) .^ 2 - x(1) .^ 2 .* exp(-(t - x(6)) .^ 2 ./ x(5) .^ 2 ./ 0.2e1) .^ 2 .* (t - x(6)) .* (0.2e1 .* real(uS) .^ 2 .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) - 0.2e1 .* imag(uS) .^ 2 .* cos(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2) + 0.4e1 .* imag(uS) .* real(uS) .* sin(0.2e1 .* x(2) + 0.2e1 .* x(3) .* (t - x(6)) + 0.2e1 .* x(4) .* (t - x(6)) .^ 2)) ./ x(5) .^ 2;
+Ixi = integral(@(t)FIxi(t,x),-inf,inf,'AbsTol',1e-15,'RelTol',1e-13);
+
+figure(1)
+FaT = FIa(tt,x);
+plot(tt, FaT);
+figure(2)
+FbT = FIb(tt,x);
+plot(tt, FbT);
+figure(3)
+FcT = FIc(tt,x);
+plot(tt, FcT);
+figure(4)
+FdT = FId(tt,x);
+plot(tt, FdT);
+figure(5)
+FsT = FIs(tt,x);
+plot(tt, FsT);
+figure(6)
+FxiT = FIxi(tt,x);
+plot(tt, FxiT);
